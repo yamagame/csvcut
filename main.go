@@ -34,17 +34,17 @@ func parseFlags() (*string, *string, *int, *int, *int, *int) {
 	inputFile := flag.String("input", "", "Path to the input CSV file")
 	outputFile := flag.String("output", "", "Path to the output CSV file")
 	startColumn := flag.Int("start-column", 1, "Start column (1-based index)")
-	endColumn := flag.Int("end-column", 1, "End column (1-based index)")
+	endColumn := flag.Int("end-column", 0, "End column (1-based index)")
 	startRow := flag.Int("start-row", 1, "Start row (1-based index)")
-	endRow := flag.Int("end-row", 1, "End row (1-based index)")
+	endRow := flag.Int("end-row", 0, "End row (1-based index)")
 
 	// Add shorthand options
 	flag.StringVar(inputFile, "i", "", "Path to the input CSV file (shorthand)")
 	flag.StringVar(outputFile, "o", "", "Path to the output CSV file (shorthand)")
 	flag.IntVar(startColumn, "sc", 1, "Start column (1-based index) (shorthand)")
-	flag.IntVar(endColumn, "ec", 1, "End column (1-based index) (shorthand)")
+	flag.IntVar(endColumn, "ec", 0, "End column (1-based index) (shorthand)")
 	flag.IntVar(startRow, "sr", 1, "Start row (1-based index) (shorthand)")
-	flag.IntVar(endRow, "er", 1, "End row (1-based index) (shorthand)")
+	flag.IntVar(endRow, "er", 0, "End row (1-based index) (shorthand)")
 
 	flag.Parse()
 
@@ -110,7 +110,13 @@ func writeCSVToFile(records [][]string, filePath string) error {
 }
 
 func filterRowsAndColumns(records [][]string, startColumn, endColumn, startRow, endRow int) [][]string {
-	if startRow < 1 || endRow > len(records) || startRow > endRow {
+	if startRow < 1 {
+		startRow = 1
+	}
+	if endRow > len(records) || endRow == 0 {
+		endRow = len(records)
+	}
+	if startRow > endRow {
 		fmt.Println("Invalid row range.")
 		return nil
 	}
@@ -120,7 +126,13 @@ func filterRowsAndColumns(records [][]string, startColumn, endColumn, startRow, 
 		if i+1 < startRow || i+1 > endRow {
 			continue
 		}
-		if startColumn < 1 || endColumn > len(record) || startColumn > endColumn {
+		if startColumn < 1 {
+			startColumn = 1
+		}
+		if endColumn > len(record) || endColumn == 0 {
+			endColumn = len(record)
+		}
+		if startColumn > endColumn {
 			fmt.Println("Invalid column range.")
 			return nil
 		}

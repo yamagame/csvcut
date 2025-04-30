@@ -38,6 +38,10 @@ csvcut --input <input.csv> [--output <output.csv>] --start-column <start> --end-
 - `--start-row` or `-sr`: Start row (1-based index).
 - `--end-row` or `-er`: End row (1-based index).
 
+### Default Behavior for `-ec` and `-er`
+- If the `-ec` option is omitted, the program will include all columns up to the last column.
+- If the `-er` option is omitted, the program will include all rows up to the last row.
+
 ### Example
 
 Extract columns 2 to 4 and rows 2 to 3 from `input.csv` and save the result to `output.csv`:
