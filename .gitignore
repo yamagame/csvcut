@@ -1,0 +1,40 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Output of the build process
+/build/
+/bin/
+
+# Dependency directories
+/vendor/
+
+# Go workspace files
+*.log
+*.tmp
+*.swp
+
+# IDE and editor files
+.idea/
+.vscode/
+*.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Test binary
+*.test
+
+# User-specific files
+*.env
+*.local
+
+# CSV and temporary files
+*.tmp
+*.bak
+private/
